@@ -40,9 +40,22 @@ public class Controller {
         return "User added successfully!";
     }
     
-    @PutMapping
-    public String putUsers() {
-    	return "Put method called";
+    @PutMapping(path = "/{userId}")
+    public String putUsers(@PathVariable String userId, @RequestBody RestUser userDetails ) {
+    	 
+    	if(allUsers.containsKey(userId)) {
+    		// Update user
+            RestUser addValue = new RestUser();
+            addValue.setUserId(userDetails.getUserId());
+            addValue.setName(userDetails.getName());
+            addValue.setEmailId(userDetails.getEmailId());
+            allUsers.put(userId, addValue);
+            return "User Updated";
+    	}
+    	else {
+    		return "user not exists";
+    	}
+    	
     }
     
     @DeleteMapping(path = "/{userId}")
