@@ -3,6 +3,7 @@ package sai_rest_apis.sai;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,8 +45,14 @@ public class Controller {
     	return "Put method called";
     }
     
-    @DeleteMapping
-    public String deleteUsers() {
+    @DeleteMapping(path = "/{userId}")
+    public String deleteUsers(@PathVariable String userId) {
+    	if(allUsers.containsKey(userId)) {
+    		allUsers.remove(userId);
+    	}
+    	else {
+    		return "UserId not exists";
+    	}
     	return "Delete method called";
     }
 }
